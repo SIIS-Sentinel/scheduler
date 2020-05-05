@@ -1,0 +1,8 @@
+# Env file
+.env
+
+# MyPy files
+.mypy_cache/
+
+# Pip egg info
+*.egg-info
