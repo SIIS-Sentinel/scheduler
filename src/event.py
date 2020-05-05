@@ -1,4 +1,3 @@
-from typing import Optional
 import ast
 
 
@@ -12,10 +11,14 @@ class Event():
     def __init__(self, timestamp: float = None, value: str = None, target: str = None, buffer: str = None):
         if buffer is not None:
             self._deserialize(buffer)
+        elif timestamp is None or value is None or target is None:
+            self._ts: float = 0
+            self._value: str = ""
+            self._target: str = ""
         else:
-            self._ts: Optional[float] = timestamp
-            self._value: Optional[str] = value
-            self._target: Optional[str] = target
+            self._ts = timestamp
+            self._value = value
+            self._target = target
 
     def __repr__(self) -> str:
         'Returns a serialized version of itself for writing to a file'
@@ -32,3 +35,15 @@ class Event():
         self._ts = data["ts"]
         self._value = data["value"]
         self._target = data["target"]
+
+    @property
+    def ts(self) -> float:
+        return self._ts
+
+    @property
+    def value(self) -> str:
+        return self._value
+
+    @property
+    def target(self) -> str:
+        return self._target

@@ -1,4 +1,4 @@
-from trace import Trace
+from full_trace import Trace
 
 
 class TraceMaker():

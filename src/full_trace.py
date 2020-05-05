@@ -6,8 +6,7 @@ import os
 
 class Trace():
     def __init__(self):
-        self._events: List[Event]
-        # TODO
+        self._events: List[Event] = []
 
     @property
     def event_number(self) -> int:
@@ -27,8 +26,7 @@ class Trace():
                 lines: List[str] = f.readlines()
             for line in lines:
                 # Initialize and store the event
-                event: Event = Event()
-                event.deserialize(line)
+                event: Event = Event(buffer=line)
                 self._events.append(event)
         else:
             raise FileNotFoundError
@@ -40,16 +38,19 @@ class Trace():
         else:
             lines: List[str] = []
             for event in self._events:
-                line = event.serialize()
+                line = repr(event)
                 lines.append(line)
             with open(path, 'w') as f:
                 f.writelines(lines)
 
-    def add_event(self) -> None:
+    def add_event(self, timestamp: float, value: str, target: str) -> None:
         """
         Creates and inserts a new event from the
         given args at the correct place
         """
-        # TODO
-        # Insert the event at the correct timestamp to keep the list ordered
-        pass
+        event = Event(timestamp, value, target)
+        l: int = self.event_number
+        i: int = 0
+        while i < l and self._events[i].ts < timestamp:
+            i += 1
+        self._events.insert(i, event)
