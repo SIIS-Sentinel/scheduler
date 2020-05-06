@@ -49,7 +49,7 @@ class Trace():
             with open(path, 'w') as f:
                 f.writelines("\n".join(lines))
 
-    def add_event(self, timestamp: float, value: str, target: str) -> None:
+    def add_event(self, timestamp: int, value: str, target: str) -> None:
         """
         Creates and inserts a new event from the
         given args at the correct place

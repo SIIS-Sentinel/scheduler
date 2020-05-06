@@ -8,11 +8,11 @@ class Event():
     Can be instantiated either with explicit values, or with a repr of another Event
     """
 
-    def __init__(self, timestamp: float = None, value: str = None, target: str = None, buffer: str = None):
+    def __init__(self, timestamp: int = None, value: str = None, target: str = None, buffer: str = None):
         if buffer is not None:
             self._deserialize(buffer)
         elif timestamp is None or value is None or target is None:
-            self._ts: float = 0
+            self._ts: int = 0
             self._value: str = ""
             self._target: str = ""
         else:
@@ -37,7 +37,7 @@ class Event():
         self._target = data["target"]
 
     @property
-    def ts(self) -> float:
+    def ts(self) -> int:
         return self._ts
 
     @property

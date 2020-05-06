@@ -1,0 +1,87 @@
+[
+    {
+        "name": "Out to work",
+        "elem_type": "one_shot",
+        "condition": {
+            "days": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "time_start": "8:30",
+            "time_end": "9:30"
+        },
+        "event": "OFF",
+        "target": "presence_sensor"
+    },
+    {
+        "name": "Back from work",
+        "elem_type": "one_shot",
+        "condition": {
+            "days": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "time_start": "16:30",
+            "time_end": "17:30"
+        },
+        "event": "ON",
+        "target": "presence_sensor"
+    },
+    {
+        "name": "Evening TV",
+        "elem_type": "multi_state",
+        "condition": {
+            "days": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "time_start": "17:30",
+            "time_end": "23:30"
+        },
+        "target": "TV",
+        "states": [
+            {
+                "name": "TV on",
+                "min_duration": 30,
+                "max_duration": 240,
+                "event": "ON"
+            },
+            {
+                "name": "TV off",
+                "min_duration": 30,
+                "max_duration": 240,
+                "event": "OFF"
+            }
+        ]
+    },
+    {
+        "name": "Outside temperature",
+        "elem_type": "periodic_change",
+        "condition": {
+            "days": 7
+        },
+        "target": "thermometer",
+        "update_period": 15,
+        "states": [
+            {
+                "time": "14:00",
+                "min_value": 18,
+                "max_value": 28
+            },
+            {
+                "time": "04:00",
+                "min_value": 5,
+                "max_value": 15
+            }
+        ]
+    }
+]
