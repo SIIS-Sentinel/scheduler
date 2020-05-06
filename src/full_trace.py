@@ -1,10 +1,16 @@
-from event import Event
+from src.event import Event
 from typing import List
 
 import os
 
 
 class Trace():
+    """
+    Complete event trace used by the scheduler
+
+    Can be setup by either loading a dumped trace file, or by inserting events
+    """
+
     def __init__(self):
         self._events: List[Event] = []
 
@@ -41,7 +47,7 @@ class Trace():
                 line = repr(event)
                 lines.append(line)
             with open(path, 'w') as f:
-                f.writelines(lines)
+                f.writelines("\n".join(lines))
 
     def add_event(self, timestamp: float, value: str, target: str) -> None:
         """

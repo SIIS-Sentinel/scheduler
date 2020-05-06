@@ -1,0 +1,3 @@
+{'ts': 1, 'value': 'value_1', 'target': 'target_1'}
+{'ts': 2, 'value': 'value_2', 'target': 'target_2'}
+{'ts': 3, 'value': 'value_3', 'target': 'target_3'}
