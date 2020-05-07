@@ -8,3 +8,9 @@ def test_parse(tmp_path):
 def test_generate(tmp_path):
     trace = TraceMaker("tests/files/schedule.json", tmp_path / "trace.txt")
     trace.generate_trace()
+
+
+def test_write(tmp_path):
+    trace = TraceMaker("tests/files/schedule.json", tmp_path / "trace.txt")
+    trace.generate_trace()
+    trace.write_trace()

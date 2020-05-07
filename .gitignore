@@ -9,3 +9,7 @@
 
 # VSCode
 .vscode/
+
+# Scratch test files
+test.py
+trace.txt

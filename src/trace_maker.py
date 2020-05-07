@@ -1,5 +1,5 @@
 from src.full_trace import Trace
-from src.schedule_types import Condition, State, ScheduleElement, schedule_from_dict
+from src.schedule_types import State, ScheduleElement, schedule_from_dict
 from typing import List
 
 import os
@@ -48,11 +48,32 @@ class TraceMaker():
                         trigger_time = random.randint(min_time, max_time) + i * 1440
                         self._trace.add_event(trigger_time, element.event, element.target)
             elif element.elem_type == "multi_state":
-                # TODO
-                pass
+                for i, day in enumerate(range(self._start_day, self._start_day + self._duration)):
+                    if (element.condition.days == 7) or ((day % 7) in element.condition.days):
+                        print("ye")
+                        time = self.to_time(element.condition.time_start)
+                        end_time = self.to_time(element.condition.time_end)
+                        max_duration = end_time - time
+                        state: State = None
+                        while time <= end_time:
+                            # Pick a new state and duration at random
+                            state = random.choice(element.states)
+                            min_duration = state.min_duration
+                            max_duration = state.max_duration
+                            duration = min(random.randint(min_duration, max_duration), max_duration)
+                            trigger_time = time + i * 1440
+                            # Add to the trace
+                            self._trace.add_event(trigger_time, state.event, element.target)
+                            # Update the remaining time
+                            time += duration
+                            max_duration = end_time - time
+
             elif element.elem_type == "periodic_change":
-                # TODO
                 pass
+
+    def write_trace(self, overwrite: bool = False):
+        "Dump the generated event trace to a file"
+        self._trace.store_file(self._trace_path, overwrite=overwrite)
 
     @staticmethod
     def to_time(time: str) -> int:
