@@ -14,6 +14,8 @@ class TraceMaker():
     Args:
         - schedule: path to the existing schedule file
         - trace: path to the file where the trace should be stored
+        - start_day: day of the week when the trace should start (Mon=0)
+        - duration: number of days the trace should last
     """
 
     def __init__(self, schedule: str, trace: str, start_day: int = 0, duration: int = 14):
@@ -29,6 +31,10 @@ class TraceMaker():
     @property
     def _start_time(self) -> int:
         return self._start_day * 1440
+
+    @property
+    def _duration_min(self) -> int:
+        return self._duration * 1440
 
     def parse_schedule(self) -> None:
         'From the schedule file, creates a list of ScheduleElements'
@@ -55,7 +61,6 @@ class TraceMaker():
             elif element.elem_type == "multi_state":
                 for i, day in enumerate(range(self._start_day, self._start_day + self._duration)):
                     if (element.condition.days == 7) or ((day % 7) in element.condition.days):
-                        print("ye")
                         time = self.to_time(element.condition.time_start)
                         end_time = self.to_time(element.condition.time_end)
                         max_duration = end_time - time
@@ -76,9 +81,14 @@ class TraceMaker():
             elif element.elem_type == "periodic_change":
                 # Generate dict of target values
                 targets: Dict[int, int] = {}
+                for day in range(self._start_day - 1, self._start_day + self._duration + 1):
+                    for state in element.states:
+                        ts = self.to_time(state.time) + day * 1440
+                        val = random.randint(state.min_value, state.max_value)
+                        targets[ts] = val
                 # Create events list L, calculate number of events
                 events: List[Tuple[int, int]] = []
-                events_number: int = math.ceil(self._duration / element.update_period) + 1
+                events_number: int = math.ceil(self._duration_min / element.update_period) + 1
                 # Iterate over all events numbers
                 for i in range(events_number):
                     event_ts: int = i * element.update_period + self._start_time
@@ -107,7 +117,7 @@ class TraceMaker():
         best_ts: int = None
         best_val: int = None
         for point in points:
-            if best_ts is None or (point > best_ts and point < ts):
+            if (best_ts is None or point > best_ts) and point < ts:
                 best_ts = point
                 best_val = points[point]
         if best_ts is None:
@@ -120,7 +130,8 @@ class TraceMaker():
         best_ts: int = None
         best_val: int = None
         for point in points:
-            if best_ts is None or (point < best_ts and point > ts):
+            if (best_ts is None or point < best_ts) and point > ts:
+                # raise Exception(f"{point} and {best_ts} and {ts}")
                 best_ts = point
                 best_val = points[point]
         if best_ts is None:

@@ -1,4 +1,4 @@
-from typing import List, Union, Optional, Any, TypeVar, Callable, Type, cast
+from typing import List, Optional, Any, TypeVar, Callable, Type, cast
 
 
 T = TypeVar("T")
@@ -14,15 +14,6 @@ def from_int(x: Any) -> int:
     return x
 
 
-def from_union(fs, x):
-    for f in fs:
-        try:
-            return f(x)
-        except:
-            pass
-    assert False
-
-
 def from_str(x: Any) -> str:
     assert isinstance(x, str)
     return x
@@ -33,17 +24,26 @@ def from_none(x: Any) -> Any:
     return x
 
 
+def from_union(fs, x):
+    for f in fs:
+        try:
+            return f(x)
+        except:
+            pass
+    assert False
+
+
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
 
 
 class Condition:
-    days: Union[List[int], int]
+    days: List[int]
     time_start: Optional[str]
     time_end: Optional[str]
 
-    def __init__(self, days: Union[List[int], int], time_start: Optional[str], time_end: Optional[str]) -> None:
+    def __init__(self, days: List[int], time_start: Optional[str], time_end: Optional[str]) -> None:
         self.days = days
         self.time_start = time_start
         self.time_end = time_end
@@ -51,14 +51,14 @@ class Condition:
     @staticmethod
     def from_dict(obj: Any) -> 'Condition':
         assert isinstance(obj, dict)
-        days = from_union([lambda x: from_list(from_int, x), from_int], obj.get("days"))
+        days = from_list(from_int, obj.get("days"))
         time_start = from_union([from_str, from_none], obj.get("time_start"))
         time_end = from_union([from_str, from_none], obj.get("time_end"))
         return Condition(days, time_start, time_end)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["days"] = from_union([lambda x: from_list(from_int, x), from_int], self.days)
+        result["days"] = from_list(from_int, self.days)
         result["time_start"] = from_union([from_str, from_none], self.time_start)
         result["time_end"] = from_union([from_str, from_none], self.time_end)
         return result
