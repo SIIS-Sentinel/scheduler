@@ -1,6 +1,6 @@
 from src.full_trace import Trace
 from src.schedule_types import State, ScheduleElement, schedule_from_dict
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
 import os
 import json
@@ -53,14 +53,14 @@ class TraceMaker():
         for element in self._schedule:
             if element.elem_type == 'one_shot':
                 for i, day in enumerate(range(self._start_day, self._start_day + self._duration)):
-                    if (element.condition.days == 7) or ((day % 7) in element.condition.days):
+                    if (7 in element.condition.days) or ((day % 7) in element.condition.days):
                         min_time = self.to_time(element.condition.time_start)
                         max_time = self.to_time(element.condition.time_end)
                         trigger_time = random.randint(min_time, max_time) + i * 1440
                         self._trace.add_event(trigger_time, element.event, element.target)
             elif element.elem_type == "multi_state":
                 for i, day in enumerate(range(self._start_day, self._start_day + self._duration)):
-                    if (element.condition.days == 7) or ((day % 7) in element.condition.days):
+                    if (7 in element.condition.days) or ((day % 7) in element.condition.days):
                         time = self.to_time(element.condition.time_start)
                         end_time = self.to_time(element.condition.time_end)
                         max_duration = end_time - time
@@ -91,6 +91,7 @@ class TraceMaker():
                 events_number: int = math.ceil(self._duration_min / element.update_period) + 1
                 # Iterate over all events numbers
                 for i in range(events_number):
+                    print("ye")
                     event_ts: int = i * element.update_period + self._start_time
                     # Calculate their value and add them to L
                     if event_ts in targets.keys():
@@ -102,11 +103,14 @@ class TraceMaker():
                     events.append((event_ts, event_val))
 
                 # For each element of L, check if their ts match the condition
+                last_value: int = None
                 for event in events:
                     event_day = (math.floor(event[0] / 1440)) % 7
-                    if event_day in element.condition.days:
-                        # Add the correct ones to the trace
-                        self._trace.add_event(event[0], str(event[1]), element.target)
+                    if (7 in element.condition.days) or (event_day in element.condition.days):
+                        # Only add the event if it changes the previous value
+                        if last_value is None or event[1] != last_value:
+                            self._trace.add_event(event[0], str(event[1]), element.target)
+                        last_value = event[1]
 
     def write_trace(self, overwrite: bool = False):
         "Dump the generated event trace to a file"
@@ -114,27 +118,27 @@ class TraceMaker():
 
     @staticmethod
     def get_prev_ts(ts: int, points: Dict[int, int]) -> Tuple[int, int]:
-        best_ts: int = None
-        best_val: int = None
+        best_ts: Optional[int] = None
+        best_val: Optional[int] = None
         for point in points:
             if (best_ts is None or point > best_ts) and point < ts:
                 best_ts = point
                 best_val = points[point]
-        if best_ts is None:
+        if best_ts is None or best_val is None:
             raise KeyError(f"Previous value of {ts} not found.")
         else:
             return (best_ts, best_val)
 
     @staticmethod
     def get_next_ts(ts: int, points: Dict[int, int]) -> Tuple[int, int]:
-        best_ts: int = None
-        best_val: int = None
+        best_ts: Optional[int] = None
+        best_val: Optional[int] = None
         for point in points:
             if (best_ts is None or point < best_ts) and point > ts:
                 # raise Exception(f"{point} and {best_ts} and {ts}")
                 best_ts = point
                 best_val = points[point]
-        if best_ts is None:
+        if best_ts is None or best_val is None:
             raise KeyError(f"Next value of {ts} not found.")
         else:
             return (best_ts, best_val)

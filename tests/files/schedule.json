@@ -72,7 +72,7 @@
             ]
         },
         "target": "thermometer",
-        "update_period": 15,
+        "update_period": 2,
         "states": [
             {
                 "time": "14:00",

@@ -1,4 +1,4 @@
-from full_trace import Trace
+from src.full_trace import Trace
 
 
 class Scheduler():
