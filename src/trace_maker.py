@@ -26,6 +26,10 @@ class TraceMaker():
 
         self.parse_schedule()
 
+    @property
+    def _start_time(self) -> int:
+        return self._start_day * 1440
+
     def parse_schedule(self) -> None:
         'From the schedule file, creates a list of ScheduleElements'
         if os.path.exists(self._schedule_path):
@@ -70,68 +74,66 @@ class TraceMaker():
                             max_duration = end_time - time
 
             elif element.elem_type == "periodic_change":
-                events_number = math.ceil((self._duration + 1440) / element.update_period)
-                states_dict: Dict[int, int] = {}
-                events_list: List[Tuple[int, str]] = []
+                # Generate dict of target values
+                targets: Dict[int, int] = {}
+                # Create events list L, calculate number of events
+                events: List[Tuple[int, int]] = []
+                events_number: int = math.ceil(self._duration / element.update_period) + 1
+                # Iterate over all events numbers
                 for i in range(events_number):
-                    ts = i * element.update_period
-                    prev_state_ts, prev_state_val = self.get_prev_state(states_dict, element, ts)
-                    next_state_ts, next_state_val = self.get_next_state(states_dict, element, ts)
-                    val = str(prev_state_val + (next_state_val - prev_state_val) * (ts - prev_state_ts) / (next_state_ts - prev_state_ts))
-                    events_list.append((ts, val))
-                    # TODO: add the correct events to the trace
+                    event_ts: int = i * element.update_period + self._start_time
+                    # Calculate their value and add them to L
+                    if event_ts in targets.keys():
+                        event_val = targets[event_ts]
+                    else:
+                        prev: Tuple[int, int] = self.get_prev_ts(event_ts, targets)
+                        next: Tuple[int, int] = self.get_next_ts(event_ts, targets)
+                        event_val: int = self.interpolate(event_ts, prev, next)
+                    events.append((event_ts, event_val))
 
-    def get_prev_state(self, states_dict: dict, element: ScheduleElement, ts: int) -> Tuple[int, int]:
-        states_ts: Dict[int, Tuple[int, int]] = {self.to_time(i.time): (i.min_value, i.max_value) for i in element.states}
-        if ts in states_dict.keys():
-            return ts, states_dict[ts]
-        elif ts % 1440 in states_ts:
-            # Generate a new data point and store it in the dict
-            state = states_ts[ts % 1440]
-            val = random.randint(state[0], state[1])
-            states_dict[ts] = val
-            return ts, val
-        else:
-            # Find the oldest previous state and return it
-            prev_ts = -1
-            prev_val = 0
-            changed = False
-            for state_ts in states_dict.keys():
-                if state_ts < ts and state_ts > prev_ts:
-                    prev_ts = state_ts
-                    prev_val = states_dict[state_ts]
-                    changed = True
-                if changed:
-                    return prev_ts, prev_val
-                else:
-                    # Generate a new point
-
-        return - 1, -1
-
-    def get_next_state(self, states_dict: dict, element: ScheduleElement, ts: int) -> Tuple[int, int]:
-        states_ts: Dict[int, Tuple[int, int]] = {self.to_time(i.time): (i.min_value, i.max_value) for i in element.states}
-        if ts in states_dict.keys():
-            return ts, states_dict[ts]
-        elif ts % 1440 in states_ts:
-            # Generate a new data point and store it in the dict
-            state = states_ts[ts % 1440]
-            val = random.randint(state[0], state[1])
-            states_dict[ts] = val
-            return ts, val
-        else:
-            # Find the oldest previous state and return it
-            prev_ts = -1
-            prev_val = 0
-            for state_ts in states_dict.keys():
-                if state_ts > ts and state_ts < prev_ts:
-                    prev_ts = state_ts
-                    prev_val = states_dict[state_ts]
-                return prev_ts, prev_val
-        return -1, -1
+                # For each element of L, check if their ts match the condition
+                for event in events:
+                    event_day = (math.floor(event[0] / 1440)) % 7
+                    if event_day in element.condition.days:
+                        # Add the correct ones to the trace
+                        self._trace.add_event(event[0], str(event[1]), element.target)
 
     def write_trace(self, overwrite: bool = False):
         "Dump the generated event trace to a file"
         self._trace.store_file(self._trace_path, overwrite=overwrite)
+
+    @staticmethod
+    def get_prev_ts(ts: int, points: Dict[int, int]) -> Tuple[int, int]:
+        best_ts: int = None
+        best_val: int = None
+        for point in points:
+            if best_ts is None or (point > best_ts and point < ts):
+                best_ts = point
+                best_val = points[point]
+        if best_ts is None:
+            raise KeyError(f"Previous value of {ts} not found.")
+        else:
+            return (best_ts, best_val)
+
+    @staticmethod
+    def get_next_ts(ts: int, points: Dict[int, int]) -> Tuple[int, int]:
+        best_ts: int = None
+        best_val: int = None
+        for point in points:
+            if best_ts is None or (point < best_ts and point > ts):
+                best_ts = point
+                best_val = points[point]
+        if best_ts is None:
+            raise KeyError(f"Next value of {ts} not found.")
+        else:
+            return (best_ts, best_val)
+
+    @staticmethod
+    def interpolate(x: int, prev: Tuple[int, int], next: Tuple[int, int]) -> int:
+        "Performs a linear interpolation between prev and next at the x-value x"
+        slope: float = (x - prev[0]) / (next[0] - prev[0])
+        y: float = prev[1] + (next[1] - prev[1]) * slope
+        return int(round(y, 0))
 
     @staticmethod
     def to_time(time: str) -> int:
