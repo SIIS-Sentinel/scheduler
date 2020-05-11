@@ -1,0 +1,7 @@
+{
+    "addr": "localhost",
+    "port": 1883,
+    "name": "scheduler",
+    "username": "user",
+    "password": "password"
+}

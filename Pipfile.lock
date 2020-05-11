@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "43fe0bd65e1b97c08048c19fde756fa5a84160d92b965c7f2f550b9755e4fa81"
+            "sha256": "94f6b4af0d016f0324d01acd0f462ed6a39b37bae24a0d6407098779929d8097"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -93,6 +93,13 @@
             ],
             "version": "==20.3"
         },
+        "paho-mqtt": {
+            "hashes": [
+                "sha256:e3d286198baaea195c8b3bc221941d25a3ab0e1507fc1779bdb7473806394be4"
+            ],
+            "index": "pypi",
+            "version": "==1.5.0"
+        },
         "pluggy": {
             "hashes": [
                 "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0",
@@ -130,11 +137,11 @@
         },
         "pytest": {
             "hashes": [
-                "sha256:0e5b30f5cb04e887b91b1ee519fa3d89049595f428c1db76e73bd7f17b09b172",
-                "sha256:84dde37075b8805f3d1f392cc47e38a0e59518fb46a431cfdaf7cf1ce805f970"
+                "sha256:95c710d0a72d91c13fae35dce195633c929c3792f54125919847fdcdf7caa0d3",
+                "sha256:eb2b5e935f6a019317e455b6da83dd8650ac9ffd2ee73a7b657a30873d67a698"
             ],
             "index": "pypi",
-            "version": "==5.4.1"
+            "version": "==5.4.2"
         },
         "six": {
             "hashes": [
