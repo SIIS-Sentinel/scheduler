@@ -1,0 +1,7 @@
+{
+    "addr": "test_addr",
+    "port": 12345,
+    "name": "test_name",
+    "username": "test_user",
+    "password": "test_password"
+}

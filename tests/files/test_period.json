@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Period Test",
+        "elem_type": "periodic_change",
+        "condition": {
+            "days": [
+                7
+            ]
+        },
+        "target": "thermometer",
+        "update_period": 2,
+        "states": [
+            {
+                "time": "14:00",
+                "min_value": 18,
+                "max_value": 28
+            },
+            {
+                "time": "04:00",
+                "min_value": 5,
+                "max_value": 15
+            }
+        ]
+    }
+]

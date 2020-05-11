@@ -5,7 +5,7 @@ import filecmp
 
 
 def test_all(tmp_path):
-    maker = TraceMaker("tests/files/schedule.json", tmp_path / "trace.txt")
+    maker = TraceMaker("tests/files/test_schedule.json", tmp_path / "trace.txt")
     maker.generate_trace()
     maker.write_trace()
     trace = Trace()

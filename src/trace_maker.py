@@ -91,7 +91,6 @@ class TraceMaker():
                 events_number: int = math.ceil(self._duration_min / element.update_period) + 1
                 # Iterate over all events numbers
                 for i in range(events_number):
-                    print("ye")
                     event_ts: int = i * element.update_period + self._start_time
                     # Calculate their value and add them to L
                     if event_ts in targets.keys():

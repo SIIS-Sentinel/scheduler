@@ -15,7 +15,7 @@ def test_order():
 
 def test_load():
     trace = Trace()
-    trace.load_file("tests/files/test_load.txt")
+    trace.load_file("tests/files/basic_test_trace.txt")
     assert trace.event(0).ts == 1
     assert trace.event(1).ts == 2
     assert trace.event(2).ts == 3

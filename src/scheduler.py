@@ -15,15 +15,16 @@ class Scheduler():
         - trace: path the the trace event file to use
     """
 
-    def __init__(self, trace_path: str, config_path: str):
+    def __init__(self, trace_path: str, config_path: str, debug: bool = False):
         self._trace: Trace = Trace()
-        self._start_time: int
+        self._start_time: float
         self._trace.load_file(trace_path)
+        self._debug: bool = debug
         self._cfg: SchedulerConfig = self.load_config(config_path)
         self._client: mqtt.Client = mqtt.Client(self._cfg.name)
+        if not self._debug:
+            self.configure_client()
         self._engine: sched.scheduler = sched.scheduler(self.scheduler_time, self.scheduler_sleep)
-
-        self.configure_client()
 
     @staticmethod
     def load_config(config_path: str) -> SchedulerConfig:
@@ -36,28 +37,33 @@ class Scheduler():
         print("Connected to broker")
 
     @staticmethod
-    def scheduler_sleep(delay: int) -> None:
+    def scheduler_sleep(delay: float) -> None:
         "Delays for the given number of minutes"
-        delay_s: int = delay * 60
+        delay_s: float = delay * 60
         time.sleep(delay_s)
 
     def configure_client(self) -> None:
-        self._client.on_connect(self.connected)
+        self._client.on_connect = self.connected
         self._client.username_pw_set(self._cfg.username, self._cfg.password)
         self._client.connect(self._cfg.addr, self._cfg.port)
         self._client.loop_start()
 
-    def scheduler_time(self) -> int:
+    def scheduler_time(self) -> float:
         "Returns the number of minutes since the scheduler started"
-        real_time: int = int(time.time() // 60)
+        real_time: float = time.time() / 60
         return real_time - self._start_time
 
     def start(self) -> None:
         'Starts the scheduler'
-        self._start_time = int(time.time() // 60)
+        self._start_time = time.time() // 60
         for event in self._trace.events:
             self._engine.enterabs(event.ts, 0, self.execute_event, argument=(event.value, event.target))
+        print("Starting the scheduling engine")
+        self._engine.run()
+        print("All events have been dispatched")
 
     def execute_event(self, value: str, target: str) -> None:
         print(f"Sending value {value} to target {target}")
-        self._client.publish(target, payload=value, qos=1, retain=False)
+        if not self._debug:
+            self._client.publish(target, payload=value, qos=1, retain=False)
+        print("Value sent")

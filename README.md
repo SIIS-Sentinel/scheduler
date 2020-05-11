@@ -29,3 +29,7 @@ Once the trace has been generated, it is fed to the event executer, that will st
 * `one_shot`: an event that fires only once. The trigger time is picked randomly between `time_start` and `time_end`
 * `mutli_state`: an event that switches between states at random. At the end of each cycle, a new state is picked among all available, and its duration is picked at random between `min_duration` and `max_duration`
 * `periodic_change`: a series of events that represent a value varying linearly between multiple states. Each state's value is picked at random between `min_value` and `max_value`
+
+## Debug option
+To run tests on the scheduler, the `debug:bool` argument can be passed at creation time. This will prevent any MQTT action from happening. The MQTT client will be created but will not connect to the broker, nor will any message be sent when an event occurs.
+
