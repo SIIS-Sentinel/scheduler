@@ -5,6 +5,7 @@ import paho.mqtt.client as mqtt
 import json
 import sched
 import time
+import os
 
 
 class Scheduler():
@@ -25,6 +26,8 @@ class Scheduler():
         if not self._debug:
             self.configure_client()
         self._engine: sched.scheduler = sched.scheduler(self.scheduler_time, self.scheduler_sleep)
+        if os.path.exists(self._cfg.log_path) and not self._cfg.overwrite_log:
+            raise FileExistsError("Log file already exists and no overwrite configured")
 
     @staticmethod
     def load_config(config_path: str) -> SchedulerConfig:
@@ -66,4 +69,7 @@ class Scheduler():
         print(f"Sending value {value} to target {target}")
         if not self._debug:
             self._client.publish(target, payload=value, qos=1, retain=False)
+        with open(self._cfg.log_path, "a") as f:
+            log_entry: str = f"{time.time()}, {target}, {value}"
+            f.write(log_entry)
         print("Value sent")

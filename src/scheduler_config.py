@@ -14,6 +14,11 @@ def from_int(x: Any) -> int:
     return x
 
 
+def from_bool(x: Any) -> bool:
+    assert isinstance(x, bool)
+    return x
+
+
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
@@ -25,13 +30,17 @@ class SchedulerConfig:
     name: str
     username: str
     password: str
+    log_path: str
+    overwrite_log: bool
 
-    def __init__(self, addr: str, port: int, name: str, username: str, password: str) -> None:
+    def __init__(self, addr: str, port: int, name: str, username: str, password: str, log_path: str, overwrite_log: bool) -> None:
         self.addr = addr
         self.port = port
         self.name = name
         self.username = username
         self.password = password
+        self.log_path = log_path
+        self.overwrite_log = overwrite_log
 
     @staticmethod
     def from_dict(obj: Any) -> 'SchedulerConfig':
@@ -41,7 +50,9 @@ class SchedulerConfig:
         name = from_str(obj.get("name"))
         username = from_str(obj.get("username"))
         password = from_str(obj.get("password"))
-        return SchedulerConfig(addr, port, name, username, password)
+        log_path = from_str(obj.get("log_path"))
+        overwrite_log = from_bool(obj.get("overwrite_log"))
+        return SchedulerConfig(addr, port, name, username, password, log_path, overwrite_log)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -50,6 +61,8 @@ class SchedulerConfig:
         result["name"] = from_str(self.name)
         result["username"] = from_str(self.username)
         result["password"] = from_str(self.password)
+        result["log_path"] = from_str(self.log_path)
+        result["overwrite_log"] = from_bool(self.overwrite_log)
         return result
 
 

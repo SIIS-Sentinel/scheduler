@@ -3,5 +3,7 @@
     "port": 1883,
     "name": "scheduler",
     "username": "user",
-    "password": "password"
+    "password": "password",
+    "log_path": "./schedule.log",
+    "overwrite_log": false
 }
