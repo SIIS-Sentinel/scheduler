@@ -47,7 +47,10 @@ class Scheduler():
 
     def configure_client(self) -> None:
         self._client.on_connect = self.connected
-        self._client.username_pw_set(self._cfg.username, self._cfg.password)
+        print(self._cfg.keyfile)
+        self._client.tls_set(ca_certs=self._cfg.cafile,
+                             certfile=self._cfg.certfile,
+                             keyfile=self._cfg.keyfile)
         self._client.connect(self._cfg.addr, self._cfg.port)
         self._client.loop_start()
 
@@ -73,3 +76,8 @@ class Scheduler():
             log_entry: str = f"{time.time()}, {target}, {value}"
             f.write(log_entry)
         print("Value sent")
+
+
+if __name__ == "__main__":
+    s = Scheduler("tests/files/test_trace.txt", "files/scheduler_config.json")
+    s.start()

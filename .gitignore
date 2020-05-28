@@ -13,3 +13,8 @@
 # Scratch test files
 test.py
 trace.txt
+
+# Artifacts
+schedule.log
+build/
+dist/

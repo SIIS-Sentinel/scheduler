@@ -32,8 +32,11 @@ class SchedulerConfig:
     password: str
     log_path: str
     overwrite_log: bool
+    cafile: str
+    certfile: str
+    keyfile: str
 
-    def __init__(self, addr: str, port: int, name: str, username: str, password: str, log_path: str, overwrite_log: bool) -> None:
+    def __init__(self, addr: str, port: int, name: str, username: str, password: str, log_path: str, overwrite_log: bool, cafile: str, certfile: str, keyfile: str) -> None:
         self.addr = addr
         self.port = port
         self.name = name
@@ -41,6 +44,9 @@ class SchedulerConfig:
         self.password = password
         self.log_path = log_path
         self.overwrite_log = overwrite_log
+        self.cafile = cafile
+        self.certfile = certfile
+        self.keyfile = keyfile
 
     @staticmethod
     def from_dict(obj: Any) -> 'SchedulerConfig':
@@ -52,7 +58,10 @@ class SchedulerConfig:
         password = from_str(obj.get("password"))
         log_path = from_str(obj.get("log_path"))
         overwrite_log = from_bool(obj.get("overwrite_log"))
-        return SchedulerConfig(addr, port, name, username, password, log_path, overwrite_log)
+        cafile = from_str(obj.get("cafile"))
+        certfile = from_str(obj.get("certfile"))
+        keyfile = from_str(obj.get("keyfile"))
+        return SchedulerConfig(addr, port, name, username, password, log_path, overwrite_log, cafile, certfile, keyfile)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -63,6 +72,9 @@ class SchedulerConfig:
         result["password"] = from_str(self.password)
         result["log_path"] = from_str(self.log_path)
         result["overwrite_log"] = from_bool(self.overwrite_log)
+        result["cafile"] = from_str(self.cafile)
+        result["certfile"] = from_str(self.certfile)
+        result["keyfile"] = from_str(self.keyfile)
         return result
 
 
