@@ -1,16 +1,17 @@
-from src.full_trace import Trace
+from hypothesis import given
+from hypothesis.strategies import lists, integers
+from typing import List
+
+from scheduler.full_trace import Trace
 
 
-def test_order():
+@given(data=lists(integers()))
+def test_order(data: List[int]):
     trace = Trace()
-    trace.add_event(0, "value", "target")
-    trace.add_event(3, "value", "target")
-    trace.add_event(1, "value", "target")
-    trace.add_event(2, "value", "target")
-    assert trace.event(0).ts == 0
-    assert trace.event(1).ts == 1
-    assert trace.event(2).ts == 2
-    assert trace.event(3).ts == 3
+    for i in data:
+        trace.add_event(i, "value", "target")
+    for i in range(trace.event_number - 1):
+        assert trace.event(i).ts <= trace.event(i + 1).ts
 
 
 def test_load():

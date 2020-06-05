@@ -1,4 +1,4 @@
-from src.trace_maker import TraceMaker
+from scheduler.trace_maker import TraceMaker
 
 
 def test_parse(tmp_path):

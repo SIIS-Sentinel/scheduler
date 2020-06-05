@@ -1,4 +1,4 @@
-from src.scheduler import Scheduler
+from scheduler.scheduler import Scheduler
 
 trace_path = "tests/files/test_trace.txt"
 config_path = "tests/files/test_load_config.json"
@@ -11,6 +11,11 @@ def test_load_config():
     assert sched._cfg.password == "test_password"
     assert sched._cfg.name == "test_name"
     assert sched._cfg.port == 12345
+    assert sched._cfg.log_path == "test.log"
+    assert sched._cfg.overwrite_log is True
+    assert sched._cfg.cafile == "test_ca.pem"
+    assert sched._cfg.certfile == "test_cert.crt"
+    assert sched._cfg.keyfile == "test_key.key"
 
 
 def test_empty_trace(tmp_path):

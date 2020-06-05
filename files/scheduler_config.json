@@ -1,5 +1,5 @@
 {
-    "addr": "localhost",
+    "addr": "hub.local",
     "port": 8883,
     "name": "scheduler",
     "username": "user",

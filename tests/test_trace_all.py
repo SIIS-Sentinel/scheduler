@@ -1,5 +1,5 @@
-from src.trace_maker import TraceMaker
-from src.full_trace import Trace
+from scheduler.trace_maker import TraceMaker
+from scheduler.full_trace import Trace
 
 import filecmp
 

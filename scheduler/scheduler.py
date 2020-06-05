@@ -1,5 +1,5 @@
-from src.full_trace import Trace
-from src.scheduler_config import SchedulerConfig
+from scheduler.full_trace import Trace
+from scheduler.scheduler_config import SchedulerConfig
 
 import paho.mqtt.client as mqtt
 import json
@@ -25,9 +25,11 @@ class Scheduler():
         self._client: mqtt.Client = mqtt.Client(self._cfg.name)
         if not self._debug:
             self.configure_client()
-        self._engine: sched.scheduler = sched.scheduler(self.scheduler_time, self.scheduler_sleep)
+        self._engine: sched.scheduler = sched.scheduler(
+            self.scheduler_time, self.scheduler_sleep)
         if os.path.exists(self._cfg.log_path) and not self._cfg.overwrite_log:
-            raise FileExistsError("Log file already exists and no overwrite configured")
+            raise FileExistsError(
+                "Log file already exists and no overwrite configured")
 
     @staticmethod
     def load_config(config_path: str) -> SchedulerConfig:
@@ -63,7 +65,8 @@ class Scheduler():
         'Starts the scheduler'
         self._start_time = time.time() // 60
         for event in self._trace.events:
-            self._engine.enterabs(event.ts, 0, self.execute_event, argument=(event.value, event.target))
+            self._engine.enterabs(
+                event.ts, 0, self.execute_event, argument=(event.value, event.target))
         print("Starting the scheduling engine")
         self._engine.run()
         print("All events have been dispatched")

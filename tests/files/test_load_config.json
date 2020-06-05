@@ -3,5 +3,10 @@
     "port": 12345,
     "name": "test_name",
     "username": "test_user",
-    "password": "test_password"
+    "password": "test_password",
+    "log_path": "test.log",
+    "overwrite_log": true,
+    "cafile": "test_ca.pem",
+    "certfile": "test_cert.crt",
+    "keyfile": "test_key.key"
 }

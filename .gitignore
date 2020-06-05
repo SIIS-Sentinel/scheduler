@@ -14,7 +14,15 @@
 test.py
 trace.txt
 
+# Pycache
+**/__pycache__/
+
 # Artifacts
 schedule.log
 build/
 dist/
+*.log
+*.swp
+
+# Hypothesis files
+.hypothesis/

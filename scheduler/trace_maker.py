@@ -1,5 +1,5 @@
-from src.full_trace import Trace
-from src.schedule_types import State, ScheduleElement, schedule_from_dict
+from scheduler.full_trace import Trace
+from scheduler.schedule_types import State, ScheduleElement, schedule_from_dict
 from typing import List, Dict, Tuple, Optional
 
 import os

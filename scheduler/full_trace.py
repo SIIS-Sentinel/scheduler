@@ -1,4 +1,4 @@
-from src.event import Event
+from scheduler.event import Event
 from typing import List
 
 import os

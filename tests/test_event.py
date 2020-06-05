@@ -1,8 +1,11 @@
-from src.event import Event
+from hypothesis import given
+from hypothesis.strategies import text, integers, floats
+
+from scheduler.event import Event
 
 
 def test_explicit():
-    ts = 2.17
+    ts = 2
     value = "bad"
     target = "this"
     event = Event(ts, value, target)
@@ -12,14 +15,20 @@ def test_explicit():
 
 
 def test_deserial():
-    buffer = "{'ts': 3.14, 'value': 'good', 'target': 'there'}"
+    buffer = "{'ts': 3, 'value': 'good', 'target': 'there'}"
     event = Event(buffer=buffer)
-    assert event._ts == 3.14
+    assert event._ts == 3
     assert event._target == "there"
     assert event._value == "good"
 
 
-def test_serial():
-    event = Event(10.2, "val", "tar")
+@given(ts=integers(), val=text(), tar=text())
+def test_serial(ts: int, val: str, tar: str):
+    event = Event(ts, val, tar)
     serial = repr(event)
-    assert serial == "{'ts': 10.2, 'value': 'val', 'target': 'tar'}"
+    data: dict = {
+        'ts': ts,
+        'value': val,
+        'target': tar
+    }
+    assert serial == repr(data)
