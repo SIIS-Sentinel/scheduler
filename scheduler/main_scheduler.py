@@ -8,7 +8,7 @@ import sched
 import time
 import os
 
-# from intruder.intruder_hub import IntruderHub
+from intruder.intruder_hub import IntruderHub
 
 
 class Scheduler():
@@ -35,7 +35,7 @@ class Scheduler():
                 "Log file already exists and no overwrite configured")
 
         # Intruder module
-        # self.intruder: IntruderHub = IntruderHub(self._cfg.name, self._client)
+        self.intruder: IntruderHub = IntruderHub(self._cfg.name, self._client)
 
     @staticmethod
     def load_config(config_path: str) -> SchedulerConfig:
@@ -43,9 +43,12 @@ class Scheduler():
             data = json.loads(f.read())
             return SchedulerConfig.from_dict(data)
 
-    @staticmethod
-    def connected():
-        print("Connected to broker")
+    def on_connect(self, client: mqtt.Client, userdata, flags, rc):
+        print("Connected to MQTT broker")
+        self.intruder.on_connect(client, userdata, flags, rc)
+
+    def on_message(self, client: mqtt.Client, userdata, message: mqtt.MQTTMessage):
+        self.intruder.on_message(client, userdata, message)
 
     @staticmethod
     def scheduler_sleep(delay: float) -> None:
@@ -54,7 +57,8 @@ class Scheduler():
         time.sleep(delay_s)
 
     def configure_client(self) -> None:
-        self._client.on_connect = self.connected
+        self._client.on_connect = self.on_connect
+        self._client.on_message = self.on_message
         print(self._cfg.keyfile)
         self._client.tls_set(ca_certs=self._cfg.cafile,
                              certfile=self._cfg.certfile,
