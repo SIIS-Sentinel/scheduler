@@ -6,7 +6,7 @@
     "password": "password",
     "log_path": "./schedule.log",
     "overwrite_log": false,
-    "cafile": "certs/CA.pem",
-    "certfile": "certs/scheduler.crt",
-    "keyfile": "certs/scheduler.key"
+    "cafile": "/certs/CA.pem",
+    "certfile": "/certs/hub.crt",
+    "keyfile": "/certs/hub.key"
 }

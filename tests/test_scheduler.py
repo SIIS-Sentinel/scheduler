@@ -1,4 +1,4 @@
-from scheduler.scheduler import Scheduler
+from scheduler.main_scheduler import Scheduler
 
 trace_path = "tests/files/test_trace.txt"
 config_path = "tests/files/test_load_config.json"

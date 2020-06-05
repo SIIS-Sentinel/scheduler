@@ -29,13 +29,19 @@ class Scheduler():
         if not self._debug:
             self.configure_client()
         self._engine: sched.scheduler = sched.scheduler(
-            self.scheduler_time, self.scheduler_sleep)
+            self.scheduler_time,
+            self.scheduler_sleep
+        )
         if os.path.exists(self._cfg.log_path) and not self._cfg.overwrite_log:
             raise FileExistsError(
                 "Log file already exists and no overwrite configured")
 
         # Intruder module
         self.intruder: IntruderHub = IntruderHub(self._cfg.name, self._client)
+
+        # Connect to broker
+        if not self._debug:
+            self.connect()
 
     @staticmethod
     def load_config(config_path: str) -> SchedulerConfig:
@@ -59,10 +65,11 @@ class Scheduler():
     def configure_client(self) -> None:
         self._client.on_connect = self.on_connect
         self._client.on_message = self.on_message
-        print(self._cfg.keyfile)
         self._client.tls_set(ca_certs=self._cfg.cafile,
                              certfile=self._cfg.certfile,
                              keyfile=self._cfg.keyfile)
+
+    def connect(self) -> None:
         self._client.connect(self._cfg.addr, self._cfg.port)
         self._client.loop_start()
 
@@ -73,6 +80,8 @@ class Scheduler():
 
     def start(self) -> None:
         'Starts the scheduler'
+        while not self._debug and not self._client.is_connected():
+            time.sleep(0.1)
         self._start_time = time.time() // 60
         for event in self._trace.events:
             self._engine.enterabs(
@@ -92,5 +101,6 @@ class Scheduler():
 
 
 if __name__ == "__main__":
-    s = Scheduler("tests/files/test_trace.txt", "files/scheduler_config.json")
+    s = Scheduler("tests/files/test_trace.txt",
+                  "files/scheduler_config.json")
     s.start()
