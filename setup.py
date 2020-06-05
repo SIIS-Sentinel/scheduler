@@ -12,7 +12,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="http://github.com/AdrienCos/scheduler",
-    packages=find_packages(),
+    packages=['scheduler'],
     install_requires=[
         'paho-mqtt'
     ],

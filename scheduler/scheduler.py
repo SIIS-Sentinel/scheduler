@@ -1,11 +1,14 @@
-from scheduler.full_trace import Trace
 from scheduler.scheduler_config import SchedulerConfig
+from scheduler.full_trace import Trace
+
 
 import paho.mqtt.client as mqtt
 import json
 import sched
 import time
 import os
+
+# from intruder.intruder_hub import IntruderHub
 
 
 class Scheduler():
@@ -30,6 +33,9 @@ class Scheduler():
         if os.path.exists(self._cfg.log_path) and not self._cfg.overwrite_log:
             raise FileExistsError(
                 "Log file already exists and no overwrite configured")
+
+        # Intruder module
+        # self.intruder: IntruderHub = IntruderHub(self._cfg.name, self._client)
 
     @staticmethod
     def load_config(config_path: str) -> SchedulerConfig:

@@ -15,7 +15,8 @@ test.py
 trace.txt
 
 # Pycache
-**/__pycache__/
+scheduler/__pycache__/
+tests/__pycache__/
 
 # Artifacts
 schedule.log
