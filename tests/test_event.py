@@ -1,5 +1,5 @@
 from hypothesis import given
-from hypothesis.strategies import text, integers, floats
+from hypothesis.strategies import text, integers
 
 from scheduler.event import Event
 
