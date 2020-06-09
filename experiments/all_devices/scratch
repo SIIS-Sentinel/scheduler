@@ -1,0 +1,18 @@
+{'ts': 0, 'value': 'OFF', 'target': 'scheduler/mqtt_tv_1'}
+{'ts': 10, 'value': 'ON', 'target': 'scheduler/mqtt_tv_1'}
+// Attack 0
+{'ts': 20, 'value': 'mqtt_tv_1/0/0/30/100', 'target': 'intruder/control'}
+{'ts': 20, 'value': 'OFF', 'target': 'scheduler/mqtt_tv_1'}
+{'ts': 30, 'value': 'ON', 'target': 'scheduler/mqtt_tv_1'}
+// Attack 1
+{'ts': 40, 'value': 'mqtt_tv_1/1/0/30/100', 'target': 'intruder/control'}
+{'ts': 40, 'value': 'OFF', 'target': 'scheduler/mqtt_tv_1'}
+{'ts': 50, 'value': 'ON', 'target': 'scheduler/mqtt_tv_1'}
+// Attack 2
+{'ts': 60, 'value': 'mqtt_tv_1/2/0/30/100', 'target': 'intruder/control'}
+{'ts': 60, 'value': 'OFF', 'target': 'scheduler/mqtt_tv_1'}
+{'ts': 70, 'value': 'ON', 'target': 'scheduler/mqtt_tv_1'}
+// Attack 3
+{'ts': 80, 'value': 'mqtt_tv_1/3/0/30/100', 'target': 'intruder/control'}
+{'ts': 80, 'value': 'OFF', 'target': 'scheduler/mqtt_tv_1'}
+{'ts': 90, 'value': 'ON', 'target': 'scheduler/mqtt_tv_1'}
