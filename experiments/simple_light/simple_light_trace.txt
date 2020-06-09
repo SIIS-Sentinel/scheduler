@@ -1,0 +1,14 @@
+{'ts': 0, 'value': 'OFF', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 1, 'value': 'ON', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 2, 'value': 'OFF', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 3, 'value': 'ON', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 4, 'value': 'OFF', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 5, 'value': 'ON', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 5, 'value': 'OFF', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 7, 'value': 'ON', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 7, 'value': 'OFF', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 9, 'value': 'ON', 'target': 'scheduler/mqtt_light_1'}
+{'ts': 2, 'value': 'mqtt_light_1/0/0/120/100', 'target': 'intruder/control'}
+{'ts': 4, 'value': 'mqtt_light_1/1/0/120/100', 'target': 'intruder/control'}
+{'ts': 6, 'value': 'mqtt_light_1/2/0/120/100', 'target': 'intruder/control'}
+{'ts': 8, 'value': 'mqtt_light_1/3/0/120/100', 'target': 'intruder/control'}
