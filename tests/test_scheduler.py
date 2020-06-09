@@ -5,7 +5,12 @@ config_path = "tests/files/test_load_config.json"
 
 
 def test_load_config():
-    sched = Scheduler(trace_path, config_path, True)
+    sched = Scheduler(
+        trace_path,
+        config_path,
+        debug=True,
+        db_path="postgresql://pi:password@10.0.0.222/sentinel"
+    )
     assert sched._cfg.addr == "test_addr"
     assert sched._cfg.username == "test_user"
     assert sched._cfg.password == "test_password"
@@ -22,7 +27,12 @@ def test_empty_trace(tmp_path):
     path = tmp_path / "empty_trace.txt"
     with open(path, "w") as f:
         f.write("")
-    sched = Scheduler(path, config_path, True)
+    sched = Scheduler(
+        path,
+        config_path,
+        debug=True,
+        db_path="postgresql://pi:password@10.0.0.222/sentinel"
+    )
     sched.start()
 
 
@@ -36,5 +46,10 @@ def test_run(monkeypatch):
 
     monkeypatch.setattr(Scheduler, "scheduler_time", mock_time)
     monkeypatch.setattr(Scheduler, "scheduler_sleep", mock_sleep)
-    sched = Scheduler(trace_path, config_path, True)
+    sched = Scheduler(
+        trace_path,
+        config_path,
+        debug=True,
+        db_path="postgresql://pi:password@10.0.0.222/sentinel"
+    )
     sched.start()

@@ -32,8 +32,11 @@ class Trace():
                 lines: List[str] = f.readlines()
             for line in lines:
                 # Initialize and store the event
-                event: Event = Event(buffer=line)
-                self._events.append(event)
+                try:
+                    event: Event = Event(buffer=line)
+                    self._events.append(event)
+                except SyntaxError:
+                    pass
         else:
             raise FileNotFoundError
 

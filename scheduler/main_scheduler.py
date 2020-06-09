@@ -19,7 +19,7 @@ class Scheduler():
         - trace: path the the trace event file to use
     """
 
-    def __init__(self, trace_path: str, config_path: str, debug: bool = False):
+    def __init__(self, trace_path: str, config_path: str, debug: bool = False, db_path: str = None):
         self._trace: Trace = Trace()
         self._start_time: float
         self._trace.load_file(trace_path)
@@ -37,7 +37,8 @@ class Scheduler():
                 "Log file already exists and no overwrite configured")
 
         # Intruder module
-        self.intruder: IntruderHub = IntruderHub(self._cfg.name, self._client)
+        self.intruder: IntruderHub = IntruderHub(
+            self._cfg.name, self._client, db_path=db_path)
 
         # Connect to broker
         if not self._debug:
@@ -83,7 +84,8 @@ class Scheduler():
         while not self._debug and not self._client.is_connected():
             time.sleep(0.1)
         # Wait until the start of a minute
-        time.sleep(60 - (time.time() % 60))
+        if not self._debug:
+            time.sleep(60 - (time.time() % 60))
         self._start_time = time.time() // 60
         for event in self._trace.events:
             self._engine.enterabs(
