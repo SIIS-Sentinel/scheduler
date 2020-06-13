@@ -51,7 +51,7 @@ class Scheduler():
             return SchedulerConfig.from_dict(data)
 
     def on_connect(self, client: mqtt.Client, userdata, flags, rc):
-        print("Connected to MQTT broker")
+        print("Scheduler: Connected to MQTT broker")
         self.intruder.on_connect(client, userdata, flags, rc)
 
     def on_message(self, client: mqtt.Client, userdata, message: mqtt.MQTTMessage):
@@ -90,20 +90,20 @@ class Scheduler():
         for event in self._trace.events:
             self._engine.enterabs(
                 event.ts, 0, self.execute_event, argument=(event.value, event.target))
-        print("Starting the scheduling engine")
+        print("Scheduler: Starting the scheduling engine")
         self._engine.run()
-        print("All events have been dispatched")
+        print("Scheduler: All events have been dispatched")
 
     def execute_event(self, value: str, target: str) -> None:
         current_time: int = int(self.scheduler_time())
-        print(f"{current_time}: Sending value {value} to target {target}...")
+        print(f"Scheduler: {current_time}, sending value {value} to target {target}...")
         if not self._debug:
             self._client.publish(target, payload=value, qos=1, retain=False)
-        print("Sent")
+        print("Scheduler: Sent")
         with open(self._cfg.log_path, "a") as f:
             log_entry: str = f"{time.time()}\t{current_time}\t{target}\t{value}\n"
             f.write(log_entry)
-        print("Log appended")
+        print("Scheduler: Log appended")
 
 
 if __name__ == "__main__":
