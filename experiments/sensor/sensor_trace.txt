@@ -1,0 +1,28 @@
+// Trace for the all_devices experiment
+// Devices:
+// - HVAC
+// - light
+// - lock
+// - outlet
+// - presence
+// - sensor (weather station)
+// - smoke
+// - switch
+// - TV
+
+// Time between state changes: 10 minutes
+// Intruder payload format reminder: node_name/attack/start/duration/intensity
+
+
+// Sensor (Weather station)
+// No attack
+// Attack 0
+{'ts': 10, 'value': 'mqtt_sensor_1/0/0/30/100', 'target': 'intruder/control'}
+// Attack 1
+{'ts': 20, 'value': 'mqtt_sensor_1/1/0/30/100', 'target': 'intruder/control'}
+// Attack 2
+{'ts': 30, 'value': 'mqtt_sensor_1/2/0/30/100', 'target': 'intruder/control'}
+// Attack 3
+{'ts': 40, 'value': 'mqtt_sensor_1/3/0/30/100', 'target': 'intruder/control'}
+
+
