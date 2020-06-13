@@ -95,11 +95,12 @@ class Scheduler():
         print("All events have been dispatched")
 
     def execute_event(self, value: str, target: str) -> None:
-        print(f"Sending value {value} to target {target}")
+        current_time: int = int(self.scheduler_time())
+        print(f"{current_time}: Sending value {value} to target {target}")
         if not self._debug:
             self._client.publish(target, payload=value, qos=1, retain=False)
         with open(self._cfg.log_path, "a") as f:
-            log_entry: str = f"{time.time()}, {target}, {value}"
+            log_entry: str = f"{time.time()}\t{current_time}\t{target}\t{value}\n"
             f.write(log_entry)
         print("Value sent")
 
