@@ -90,7 +90,8 @@ class Scheduler():
         for event in self._trace.events:
             self._engine.enterabs(
                 event.ts, 0, self.execute_event, argument=(event.value, event.target))
-        print("Scheduler: Starting the scheduling engine")
+        localtime: tuple = time.localtime()
+        print(f"Scheduler: Starting the scheduling engine at {localtime[3]}:{localtime[4]}")
         self._engine.run()
         print("Scheduler: All events have been dispatched")
 
