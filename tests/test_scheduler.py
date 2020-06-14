@@ -9,7 +9,7 @@ def test_load_config():
         trace_path,
         config_path,
         debug=True,
-        db_path="postgresql://pi:password@10.0.0.222/sentinel"
+        db_path="postgresql://pi:password@192.168.0.110/sentinel"
     )
     assert sched._cfg.addr == "test_addr"
     assert sched._cfg.username == "test_user"
@@ -31,7 +31,7 @@ def test_empty_trace(tmp_path):
         path,
         config_path,
         debug=True,
-        db_path="postgresql://pi:password@10.0.0.222/sentinel"
+        db_path="postgresql://pi:password@hub.local/sentinel"
     )
     sched.start()
 
@@ -50,6 +50,6 @@ def test_run(monkeypatch):
         trace_path,
         config_path,
         debug=True,
-        db_path="postgresql://pi:password@10.0.0.222/sentinel"
+        db_path="postgresql://pi:password@hub.local/sentinel"
     )
     sched.start()
