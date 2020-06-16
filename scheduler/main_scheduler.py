@@ -78,15 +78,25 @@ class Scheduler():
         # print(message.payload.decode())
         self.intruder.on_message(client, userdata, message)
 
+    def on_log(self, client, userdata, level, buf):
+        if level == mqtt.MQTT_LOG_WARNING:
+            print("Warning: %s" % (buf))
+        elif level == mqtt.MQTT_LOG_ERR:
+            print("Error: %s" % (buf))
+        else:
+            print("Log: %s" % (buf))
+
     @staticmethod
     def scheduler_sleep(delay: float) -> None:
         "Delays for the given number of minutes"
         delay_s: float = delay * 60
+        print(f"Sleeping for {delay_s}s")
         time.sleep(delay_s)
 
     def configure_client(self) -> None:
         self._client.on_connect = self.on_connect
         self._client.on_message = self.on_message
+        self._client.on_log = self.on_log
         self._client.tls_set(ca_certs=self._cfg.cafile,
                              certfile=self._cfg.certfile,
                              keyfile=self._cfg.keyfile)
@@ -128,7 +138,7 @@ class Scheduler():
             log_entry: str = f"{log_time}\t{current_time}\t{target}\t{value}\n"
             f.write(log_entry)
         print("Scheduler: Log appended")
-        # Determine if we should add an event to the DB
+        Determine if we should add an event to the DB
         target_split: list = target.split("/")
         if target_split[0] == "scheduler":
             node_name = target_split[1]
