@@ -35,8 +35,9 @@ class SchedulerConfig:
     cafile: str
     certfile: str
     keyfile: str
+    db_path: str
 
-    def __init__(self, addr: str, port: int, name: str, username: str, password: str, log_path: str, overwrite_log: bool, cafile: str, certfile: str, keyfile: str) -> None:
+    def __init__(self, addr: str, port: int, name: str, username: str, password: str, log_path: str, overwrite_log: bool, cafile: str, certfile: str, keyfile: str, db_path: str) -> None:
         self.addr = addr
         self.port = port
         self.name = name
@@ -47,6 +48,7 @@ class SchedulerConfig:
         self.cafile = cafile
         self.certfile = certfile
         self.keyfile = keyfile
+        self.db_path = db_path
 
     @staticmethod
     def from_dict(obj: Any) -> 'SchedulerConfig':
@@ -61,7 +63,8 @@ class SchedulerConfig:
         cafile = from_str(obj.get("cafile"))
         certfile = from_str(obj.get("certfile"))
         keyfile = from_str(obj.get("keyfile"))
-        return SchedulerConfig(addr, port, name, username, password, log_path, overwrite_log, cafile, certfile, keyfile)
+        db_path = from_str(obj.get("db_path"))
+        return SchedulerConfig(addr, port, name, username, password, log_path, overwrite_log, cafile, certfile, keyfile, db_path)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -75,6 +78,7 @@ class SchedulerConfig:
         result["cafile"] = from_str(self.cafile)
         result["certfile"] = from_str(self.certfile)
         result["keyfile"] = from_str(self.keyfile)
+        result["db_path"] = from_str(self.db_path)
         return result
 
 

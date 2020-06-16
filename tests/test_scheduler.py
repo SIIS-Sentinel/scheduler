@@ -31,7 +31,7 @@ def test_empty_trace(tmp_path):
         path,
         config_path,
         debug=True,
-        db_path="postgresql://pi:password@hub.local/sentinel"
+        db_path="postgresql://pi:password@localhost/sentinel"
     )
     sched.start()
 
@@ -50,6 +50,6 @@ def test_run(monkeypatch):
         trace_path,
         config_path,
         debug=True,
-        db_path="postgresql://pi:password@hub.local/sentinel"
+        db_path="postgresql://pi:password@localhost/sentinel"
     )
     sched.start()

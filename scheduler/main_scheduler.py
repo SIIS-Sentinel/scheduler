@@ -9,6 +9,7 @@ import time
 import os
 
 from intruder.intruder_hub import IntruderHub
+from bookkeeper.sql import create_sessions, Node, Event
 
 
 class Scheduler():
@@ -36,6 +37,9 @@ class Scheduler():
             raise FileExistsError(
                 "Log file already exists and no overwrite configured")
 
+        # SQL session
+        self.session = create_sessions(self._cfg.db_path)
+
         # Intruder module
         self.intruder: IntruderHub = IntruderHub(
             self._cfg.name, self._client, db_path=db_path)
@@ -50,11 +54,28 @@ class Scheduler():
             data = json.loads(f.read())
             return SchedulerConfig.from_dict(data)
 
+    def get_node_id(self, name: str) -> int:
+        node = self.session.query(Node.id).filter_by(name=name).all()
+        if len(node) == 0:
+            return -1
+        node_id: int = node[0].id
+        return node_id
+
+    def add_event(self, ts: float, event_type: str, node: str) -> None:
+        node_id: int = self.get_node_id(node)
+        if node_id == -1:
+            print(f"Node {node} not found")
+            raise Exception(f"Node {node} not found in the database")
+        newEvent: Event = Event(event_type=event_type, timestamp=ts, node_id=node_id)
+        self.session.add(newEvent)
+        self.session.commit()
+
     def on_connect(self, client: mqtt.Client, userdata, flags, rc):
         print("Scheduler: Connected to MQTT broker")
         self.intruder.on_connect(client, userdata, flags, rc)
 
     def on_message(self, client: mqtt.Client, userdata, message: mqtt.MQTTMessage):
+        # print(message.payload.decode())
         self.intruder.on_message(client, userdata, message)
 
     @staticmethod
@@ -101,10 +122,18 @@ class Scheduler():
         if not self._debug:
             self._client.publish(target, payload=value, qos=1, retain=False)
         print("Scheduler: Sent")
+        # Write to the logfile
+        log_time: float = time.time()
         with open(self._cfg.log_path, "a") as f:
-            log_entry: str = f"{time.time()}\t{current_time}\t{target}\t{value}\n"
+            log_entry: str = f"{log_time}\t{current_time}\t{target}\t{value}\n"
             f.write(log_entry)
         print("Scheduler: Log appended")
+        # Determine if we should add an event to the DB
+        target_split: list = target.split("/")
+        if target_split[0] == "scheduler":
+            node_name = target_split[1]
+            self.add_event(log_time, value, node_name)
+            print("Scheduler: Added event to database")
 
 
 if __name__ == "__main__":
