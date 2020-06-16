@@ -83,14 +83,11 @@ class Scheduler():
             print("Warning: %s" % (buf))
         elif level == mqtt.MQTT_LOG_ERR:
             print("Error: %s" % (buf))
-        else:
-            print("Log: %s" % (buf))
 
     @staticmethod
     def scheduler_sleep(delay: float) -> None:
         "Delays for the given number of minutes"
         delay_s: float = delay * 60
-        print(f"Sleeping for {delay_s}s")
         time.sleep(delay_s)
 
     def configure_client(self) -> None:
