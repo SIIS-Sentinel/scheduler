@@ -15,28 +15,28 @@
 
 // HVAC
 // No attack
-{'ts': 0, 'value': 'OFF', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 10, 'value': 'HEAT', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 20, 'value': 'COOL', 'target': 'scheduler/mqtt_hvac_1'}
+{'ts': 0, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
+{'ts': 10, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 20, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
 // Attack 0
-{'ts': 30, 'value': 'mqtt_hvac_1/0/0/30/100', 'target': 'intruder/control'}
-{'ts': 30, 'value': 'OFF', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 40, 'value': 'HEAT', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 50, 'value': 'COOL', 'target': 'scheduler/mqtt_hvac_1'}
+{'ts': 30, 'value': 'hvac_1/0/0/30/100', 'target': 'intruder/control'}
+{'ts': 30, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
+{'ts': 40, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 50, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
 // Attack 1
-{'ts': 60, 'value': 'mqtt_hvac_1/1/0/30/100', 'target': 'intruder/control'}
-{'ts': 60, 'value': 'OFF', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 70, 'value': 'HEAT', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 80, 'value': 'COOL', 'target': 'scheduler/mqtt_hvac_1'}
+{'ts': 60, 'value': 'hvac_1/1/0/30/100', 'target': 'intruder/control'}
+{'ts': 60, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
+{'ts': 70, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 80, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
 // Attack 2
-{'ts': 90, 'value': 'mqtt_hvac_1/2/0/30/100', 'target': 'intruder/control'}
-{'ts': 90, 'value': 'OFF', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 100, 'value': 'HEAT', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 110, 'value': 'COOL', 'target': 'scheduler/mqtt_hvac_1'}
+{'ts': 90, 'value': 'hvac_1/2/0/30/100', 'target': 'intruder/control'}
+{'ts': 90, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
+{'ts': 100, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 110, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
 // Attack 3
-{'ts': 120, 'value': 'mqtt_hvac_1/3/0/30/100', 'target': 'intruder/control'}
-{'ts': 120, 'value': 'OFF', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 130, 'value': 'HEAT', 'target': 'scheduler/mqtt_hvac_1'}
-{'ts': 140, 'value': 'COOL', 'target': 'scheduler/mqtt_hvac_1'}
+{'ts': 120, 'value': 'hvac_1/3/0/30/100', 'target': 'intruder/control'}
+{'ts': 120, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
+{'ts': 130, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 140, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
 
 

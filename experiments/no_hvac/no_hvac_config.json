@@ -8,5 +8,6 @@
     "overwrite_log": true,
     "cafile": "/certs/CA.pem",
     "certfile": "/certs/hub.crt",
-    "keyfile": "/certs/hub.key"
+    "keyfile": "/certs/hub.key",
+    "db_path": "postgresql://pi:password@localhost/sentinel"
 }
