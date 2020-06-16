@@ -138,7 +138,7 @@ class Scheduler():
             log_entry: str = f"{log_time}\t{current_time}\t{target}\t{value}\n"
             f.write(log_entry)
         print("Scheduler: Log appended")
-        Determine if we should add an event to the DB
+        # Determine if we should add an event to the DB
         target_split: list = target.split("/")
         if target_split[0] == "scheduler":
             node_name = target_split[1]
