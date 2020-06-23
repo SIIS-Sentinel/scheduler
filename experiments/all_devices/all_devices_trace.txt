@@ -174,7 +174,7 @@
 
 // Sensor (Weather station)
 // No attack
-{'ts': 0, 'value': 'dummy', 'target': 'scheduler/dummy'}
+{'ts': 0, 'value': 'dummy', 'target': 'scheduler/sensor_1'}
 // Attack 0
 {'ts': 10, 'value': 'sensor_1/0/0/10/100', 'target': 'intruder/control'}
 // Attack 1
@@ -186,7 +186,7 @@
 // Attack 4
 {'ts': 50, 'value': 'sensor_1/4/0/10/70', 'target': 'intruder/control'}
 // Cooldown
-{'ts': 60, 'value': 'dummy', 'target': 'scheduler/dummy'}
+{'ts': 60, 'value': 'dummy', 'target': 'scheduler/sensor_1'}
 
 
 // Smoke
