@@ -17,56 +17,74 @@
 // No attack
 {'ts': 0, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
 {'ts': 2, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 4, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
 // Attack 0
-{'ts': 4, 'value': 'hvac_1/0/0/4/100', 'target': 'intruder/control'}
-{'ts': 4, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
-{'ts': 6, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 6, 'value': 'hvac_1/0/0/6/100', 'target': 'intruder/control'}
+{'ts': 6, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
+{'ts': 8, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 10, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
 // Attack 1
-{'ts': 8, 'value': 'hvac_1/1/0/4/100', 'target': 'intruder/control'}
-{'ts': 8, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
-{'ts': 10, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
-// Attack 2
-{'ts': 12, 'value': 'hvac_1/2/0/4/100', 'target': 'intruder/control'}
+{'ts': 12, 'value': 'hvac_1/1/0/6/100', 'target': 'intruder/control'}
 {'ts': 12, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
 {'ts': 14, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 16, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
+// Attack 2
+{'ts': 18, 'value': 'hvac_1/2/0/6/100', 'target': 'intruder/control'}
+{'ts': 18, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
+{'ts': 20, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 22, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
 // Attack 3
-{'ts': 16, 'value': 'hvac_1/3/0/4/100', 'target': 'intruder/control'}
-{'ts': 16, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
-{'ts': 18, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
-// Attack 4
-{'ts': 20, 'value': 'hvac_1/4/0/4/70', 'target': 'intruder/control'}
-{'ts': 20, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
-{'ts': 22, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
-// Cooldown
+{'ts': 24, 'value': 'hvac_1/3/0/6/100', 'target': 'intruder/control'}
 {'ts': 24, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
+{'ts': 26, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 28, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
+// Attack 4
+{'ts': 30, 'value': 'hvac_1/4/0/6/70', 'target': 'intruder/control'}
+{'ts': 30, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
+{'ts': 32, 'value': 'HEAT', 'target': 'scheduler/hvac_1'}
+{'ts': 34, 'value': 'COOL', 'target': 'scheduler/hvac_1'}
+// Cooldown
+{'ts': 36, 'value': 'OFF', 'target': 'scheduler/hvac_1'}
 
 
 // Light
 // No attack
 {'ts': 0, 'value': 'OFF', 'target': 'scheduler/light_1'}
 {'ts': 2, 'value': 'ON', 'target': 'scheduler/light_1'}
+{'ts': 4, 'value': 'TEMP', 'target': 'scheduler/light_1'}
+{'ts': 6, 'value': 'COL', 'target': 'scheduler/light_1'}
 // Attack 0
-{'ts': 4, 'value': 'light_1/0/0/4/100', 'target': 'intruder/control'}
-{'ts': 4, 'value': 'OFF', 'target': 'scheduler/light_1'}
-{'ts': 6, 'value': 'ON', 'target': 'scheduler/light_1'}
-// Attack 1
-{'ts': 8, 'value': 'light_1/1/0/4/100', 'target': 'intruder/control'}
+{'ts': 8, 'value': 'light_1/0/0/8/100', 'target': 'intruder/control'}
 {'ts': 8, 'value': 'OFF', 'target': 'scheduler/light_1'}
 {'ts': 10, 'value': 'ON', 'target': 'scheduler/light_1'}
-// Attack 2
-{'ts': 12, 'value': 'light_1/2/0/4/100', 'target': 'intruder/control'}
-{'ts': 12, 'value': 'OFF', 'target': 'scheduler/light_1'}
-{'ts': 14, 'value': 'ON', 'target': 'scheduler/light_1'}
-// Attack 3
-{'ts': 16, 'value': 'light_1/3/0/4/100', 'target': 'intruder/control'}
+{'ts': 12, 'value': 'TEMP', 'target': 'scheduler/light_1'}
+{'ts': 14, 'value': 'COL', 'target': 'scheduler/light_1'}
+// Attack 1
+{'ts': 16, 'value': 'light_1/1/0/8/100', 'target': 'intruder/control'}
 {'ts': 16, 'value': 'OFF', 'target': 'scheduler/light_1'}
 {'ts': 18, 'value': 'ON', 'target': 'scheduler/light_1'}
-// Attack 4
-{'ts': 20, 'value': 'light_1/4/0/4/70', 'target': 'intruder/control'}
-{'ts': 20, 'value': 'OFF', 'target': 'scheduler/light_1'}
-{'ts': 22, 'value': 'ON', 'target': 'scheduler/light_1'}
-// Cooldown
+{'ts': 20, 'value': 'TEMP', 'target': 'scheduler/light_1'}
+{'ts': 22, 'value': 'COL', 'target': 'scheduler/light_1'}
+// Attack 2
+{'ts': 24, 'value': 'light_1/2/0/8/100', 'target': 'intruder/control'}
 {'ts': 24, 'value': 'OFF', 'target': 'scheduler/light_1'}
+{'ts': 26, 'value': 'ON', 'target': 'scheduler/light_1'}
+{'ts': 28, 'value': 'TEMP', 'target': 'scheduler/light_1'}
+{'ts': 30, 'value': 'COL', 'target': 'scheduler/light_1'}
+// Attack 3
+{'ts': 32, 'value': 'light_1/3/0/8/100', 'target': 'intruder/control'}
+{'ts': 32, 'value': 'OFF', 'target': 'scheduler/light_1'}
+{'ts': 34, 'value': 'ON', 'target': 'scheduler/light_1'}
+{'ts': 36, 'value': 'TEMP', 'target': 'scheduler/light_1'}
+{'ts': 38, 'value': 'COL', 'target': 'scheduler/light_1'}
+// Attack 4
+{'ts': 40, 'value': 'light_1/4/0/8/70', 'target': 'intruder/control'}
+{'ts': 40, 'value': 'OFF', 'target': 'scheduler/light_1'}
+{'ts': 42, 'value': 'ON', 'target': 'scheduler/light_1'}
+{'ts': 44, 'value': 'TEMP', 'target': 'scheduler/light_1'}
+{'ts': 46, 'value': 'COL', 'target': 'scheduler/light_1'}
+// Cooldown
+{'ts': 48, 'value': 'OFF', 'target': 'scheduler/light_1'}
 
 
 // Lock
