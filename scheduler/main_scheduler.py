@@ -112,6 +112,7 @@ class Scheduler():
         while not self._debug and not self._client.is_connected():
             time.sleep(0.1)
         # Wait until the start of a minute
+        time.sleep(30)
         if not self._debug:
             time.sleep(60 - (time.time() % 60))
         self._start_time = time.time() // 60
