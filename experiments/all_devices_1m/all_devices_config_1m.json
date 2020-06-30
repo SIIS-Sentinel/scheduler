@@ -1,0 +1,13 @@
+{
+    "addr": "localhost",
+    "port": 8883,
+    "name": "scheduler",
+    "username": "user",
+    "password": "password",
+    "log_path": "./schedule.log",
+    "overwrite_log": true,
+    "cafile": "/certs/CA.pem",
+    "certfile": "/certs/hub.crt",
+    "keyfile": "/certs/hub.key",
+    "db_path": "postgresql://pi:password@localhost/sentinel"
+}
