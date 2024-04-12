@@ -1,6 +1,6 @@
 attrs==19.3.0
 autopep8==1.5.3
-dnspython==1.16.0
+dnspython==2.6.1
 flake8==3.8.2
 hypothesis==5.16.0
 importlib-metadata==1.6.0
